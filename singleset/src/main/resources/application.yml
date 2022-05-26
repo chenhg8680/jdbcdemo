@@ -1,0 +1,29 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: master,slave
+      master:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/t_single_set?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+        username: root
+        password: 123456
+      slave:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3307/t_single_set?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+        username: root
+        password: 123456
+    rules:
+      readwrite-splitting:
+        data-sources:
+          t_single_set:
+            write-data-source-name: master
+            read-data-source-names: slave
+            load-balancer-name: read-random
+        load-balancers:
+          t_single_set_algorithm:
+            type: RANDOM
+    props:
+      sql:
+        show: true
