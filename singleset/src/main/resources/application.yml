@@ -1,3 +1,6 @@
+logging:
+  level:
+    root: TRACE
 spring:
   shardingsphere:
     datasource:
@@ -5,13 +8,13 @@ spring:
       master:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/t_single_set?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/t_single_set?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
         username: root
         password: 123456
       slave:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3307/t_single_set?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/t_single_set?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
         username: root
         password: 123456
     rules:

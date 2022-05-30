@@ -20,8 +20,8 @@ public class TUserService {
     public TUser getOne(Integer id) throws  Exception{
         return tUserDomain.getOne(id);
     }
-    public int insert(HashMap<String,Object> params) throws  Exception{
-        return tUserDomain.insert(params);
+    public int insert(TUser tUser) throws  Exception{
+        return tUserDomain.insert(tUser);
     }
     public int update(int id, HashMap<String, Object> condition) throws Exception{
         return tUserDomain.update(id,condition);

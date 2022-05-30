@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -18,31 +19,18 @@ import java.util.*;
 public class TUserDomainImpl implements TUserDomain {
     public static final String DB_NAME = "t_user";
 
-    private final static String[] EDIT_FIELD = {"name","status"};
+    private final static String[] EDIT_FIELD = {"id","name","status"};
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public int insert(HashMap<String, Object> params) throws Exception {
+    public int insert(TUser tUser) throws Exception {
+        String sql = String.format("INSERT INTO %s (%s) value (%s)",DB_NAME,"name,status",":name,:status");
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         NamedParameterJdbcTemplate jdbc = new NamedParameterJdbcTemplate(jdbcTemplate);
 
-        List<String> fieldList = new ArrayList<>();
-        List<String> parameterList = new ArrayList<>();
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-
-        for(String f:EDIT_FIELD){
-            if(params.containsKey(f)){
-                fieldList.add(f);
-                parameterList.add(":"+f);
-                parameters.addValue(f,params.get(f));
-            }
-        }
-
-        String sql = String.format("INSERT INTO %s (%s) value (%s)",DB_NAME,String.join(",",fieldList),String.join(",",parameterList));
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbc.update( sql, parameters, keyHolder, new String[] {"id"});
+        jdbc.update( sql, new BeanPropertySqlParameterSource(tUser), keyHolder, new String[] {"id"});
         return keyHolder.getKey().intValue();
     }
 

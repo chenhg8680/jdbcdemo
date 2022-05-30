@@ -10,7 +10,7 @@ import java.util.List;
 public interface TUserDomain {
     List<TUser> queryAll(HashMap<String, Object> infos) throws Exception;
     TUser getOne(Integer id) throws  Exception;
-    int insert(HashMap<String,Object> params) throws  Exception;
+    int insert(TUser tUser) throws  Exception;
     int update(int id, HashMap<String, Object> condition) throws Exception;
     List<TUser> queryForList(HashMap<String, Object> infos, Integer page, Integer limit) throws Exception;
     List<TUser> queryForList(HashMap<String, Object> infos, Integer page, Integer limit, String orderBy, String desc) throws Exception;

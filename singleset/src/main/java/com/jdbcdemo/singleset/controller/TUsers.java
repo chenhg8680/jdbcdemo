@@ -25,12 +25,11 @@ public class TUsers {
 
     @RequestMapping(value="", method = RequestMethod.POST)
     public Integer add() throws Exception {
-        HashMap<String,Object> params = new HashMap<String,Object>(){{
-            put("name","test");
-            put("status",1);
-        }};
+        TUser tUser = new TUser();
+        tUser.setName("test1111");
+        tUser.setStatus(1);
 
-        return tUserService.insert(params);
+        return tUserService.insert(tUser);
     }
 }
 
